@@ -50,3 +50,35 @@ public:
 //         return ans.size();  
 //     }
 // };
+
+//solution by sorting and implementing binary search.
+class Solution {
+public:
+    int bs(vector<int>& arr, int start, int target){
+        int s=start;
+        int e=arr.size()-1;
+        while(s<=e){
+            int mid=(s+e)/2;
+            if(arr[mid]==target){
+                return mid;
+            }else if(arr[mid]>target){
+                e=mid-1;
+            }else{
+                s=mid+1;
+            }
+        }
+        return -1;
+    }
+
+    int findPairs(vector<int>& nums, int k) {
+        sort(nums.begin(),nums.end());
+        set<pair<int,int>> ans;
+        for(int i=0; i<nums.size(); i++){
+            if(bs(nums, i+1, nums[i]+k)!= -1){
+                ans.insert({nums[i],nums[i]+k});
+            }
+        }
+
+        return ans.size(); 
+    }
+};
